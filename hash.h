@@ -8,7 +8,6 @@
 struct Node{
   std::string data;
   Node* next;
-
 };
 
 class Table{
@@ -17,17 +16,16 @@ class Table{
     void insert(std::string ipAddress);
     bool lookUp(std::string ipAddress);
     void deleteHash(std::string ipAddress);
-    int hash(std::string ipAddress);
     void stat();
   
   private:
     int tableSize;
-    
+    int b;  // each group have b digits
     int insertSuccess = 0;
     int deleteSuccess = 0;
     std::vector<Node*> table;
     std::vector<int> col;  //store the length of collision chain at each index of table
     std::vector<int> as;  //store the random coefficient a's
-    int b;
+    int hash(std::string ipAddress);
 };
 #endif

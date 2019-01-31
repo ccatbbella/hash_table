@@ -1,7 +1,6 @@
-
 //Yixiao Yue
 //01/23/2018
-//hashTable implementation
+//hashTable implementation with Modulo Prime hash functions
 #include "hash.h"
 #include <iostream>
 #include <cstdlib>
@@ -9,7 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <bitset>
-#include<time.h> 
+#include <time.h> 
 using namespace std;
 
 string intVectToBitStr(vector<int> v){
@@ -20,7 +19,7 @@ string intVectToBitStr(vector<int> v){
     bitset<8> bit(el);
     str += bit.to_string();
   }
-return str;
+  return str;
 }
 
 vector<int> groupBitStr(string str, int b){
@@ -54,7 +53,7 @@ vector<int> groupBitStr(string str, int b){
 }
 
 vector<int> parseIP(string ipAddress){
-    //"123.90.222.34"
+    //input "123.90.222.34", output {123, 90, 222, 34}
     vector<int> result;
     string s;
     int idx; int si;
@@ -88,7 +87,7 @@ Table::Table(int tableSize, int b){
     col = std::vector<int>(tableSize, 0);
     table = {std::vector<Node*>(tableSize, NULL)};
     if(32%b == 0){
-      srand(time(0));
+      srand(time(0));  //!important
       for(int i = 0; i < 32/b; i++){
         
         int coefficient = rand()% (tableSize);
@@ -115,7 +114,7 @@ int Table::hash(string ipAddress){
 
 
 bool Table::lookUp(string ipAddress){
-//  The �lookup x� either returns �x:  found� or �x:  not found� depending on whether or not x is currently in the hash table
+//  print x:  found or x:  not found depending on whether or not x is currently in the hash table
   int hashedKey = hash(ipAddress);
   Node* n = table.at(hashedKey);
   while(n != NULL){
@@ -188,6 +187,11 @@ void Table::deleteHash(std::string ipAddress){
 }
 
 void Table::stat(){
+  /* Number of items successfully inserted:
+    Number of items successfully deleted:
+    The number of empty slots in the hash table:
+    The number of hash table slots with exactly 1 item:
+    The maximum number of collisions in the hash table:  (count, location) */
   int emptySlot = 0; int singleSlot = 0;
   for(int i = as.size() - 1; i >= 0; i--) {cout << as.at(i) << " ";}
   cout << endl;
@@ -201,5 +205,4 @@ void Table::stat(){
   cout << singleSlot << endl;
   int maxI = maxOfVector(col);
   cout << col.at(maxI) << " " << maxI << endl;
-
 }
